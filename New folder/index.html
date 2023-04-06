@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Video Anonymization</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    
+    <script>
+        function checkforblank()
+        {
+            if(document.getElementById('vid').value==""){
+                alert ("Please select a file first");
+                return false;
+            }
+            var img1=document.forms['myform']['vid'];
+            if(parseFloat(img1.files[0].size/(1024*1024))>=200){
+                alert ("File size must be smaller than 200 MB");
+                return false;
+            }
+
+            document.getElementById('preloader')
+                    .style.display = "block";
+ 
+            document.getElementById('upld')
+                    .style.display = "none";
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id = "preloader"></div>
+    <div class="topnav">
+    <div class="topnav-right">
+        <a href="{{url_for('help')}}">Help</a>
+    </div>
+    </div>
+    
+    <main>
+        
+        <div class="container">
+            <h1>Video Anonymization</h1>
+            
+            <video width="400" height="500" id="preview">Preview of source video</video>
+            
+
+            <form name="myform" id="myform" action="/" method="post" onsubmit="return checkforblank()">
+                <div class="form-ele">
+                    <div class="upld-container">
+                        <div class="upld-info">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <div>
+                                <h3>Choose a video</h3>
+                                <h5>Limit 200MB per file</h5>
+                            </div>
+                        </div>
+
+                         <div class="vid-container">
+                            <label for="vid" class="vid-label">Browse</label>
+                            <input type="file" name="vid" id="vid" accept="video/*"/>
+                            <p id="vid-name"></p>
+                        </div> 
+                    </div>
+                    
+                    <br/>
+                    <input type="submit" value="Process" id="upld" />
+                </div>
+            </form>
+        </div>
+  
+        
+        <h2 class="success">{{info}}</h2>
+    </main>
+    
+    <script>
+       
+        const video = document.getElementById("vid");
+        const preview = document.getElementById("preview");
+        const vidSrc = document.createElement("source");
+        
+        video.addEventListener("change", () => {
+            const filename = video.files[0].name;
+            console.log(filename);
+            
+            const vidName = document.getElementById("vid-name");
+            vidName.style.display = "inline";
+            vidName.innerHTML = filename;
+
+            const files = video.files || [];
+            if (!files.length) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.style.display = "block";
+                vidSrc.setAttribute("src", e.target.result);
+                preview.appendChild(vidSrc);
+                preview.load();
+                preview.play();
+            };
+
+            reader.onprogress = (e) => {
+                console.log("progress: ", Math.round((e.loaded * 100) / e.total));
+            };
+
+            reader.readAsDataURL(files[0]);
+        });
+    </script>
+
+
+    
+
+</body>
+
+
+</html>

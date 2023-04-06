@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <title>Login</title>
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style1.css') }}">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<div>
+    
+    
+<div class="container" id="container">
+<div class="form-container sign-up-container">
+<form action="/register" method="post"> 
+	<h1>Create Account</h1>
+	<span>Use your email for registration</span>
+	<br>
+	<input type="text" name="unames" id="unames" placeholder="Username">
+	<input type="email" name="mail" id="mail" placeholder="Email">
+	<input type="password" name="passwo" id="passwo" placeholder="Password"> 
+	<span style="margin-right: 21px;">*Password should be a minimum of 8 length</span>
+	<span style="margin-right: 24px;">*Password should contain 1 Uppercase letter</span>
+	<span style="margin-right: 32px;">*Password should contain atleast 1 number</span>
+	<span style="margin-right: 58px;">*Password should contain atleast $@#</span>
+	<!-- <button type="submit" onclick="alert('Account Created Successfully')">SignUp</button> -->
+    <button onclick="validatePassword()">SignUp</button>
+</form>
+</div>
+<div class="form-container sign-in-container">
+	<form action="/" method="post">
+		<h1>Sign In</h1>
+	<span>To use your account</span>
+	<br>
+	<input type="text" name="uname" id="uname" placeholder="Username">
+	<input type="password" name="passw" id="passw" placeholder="Password">
+	
+	<button type="submit">Sign In</button>
+	</form>
+</div>
+<div class="overlay-container">
+	<div class="overlay">
+		<div class="overlay-panel overlay-left">
+			<h1>Welcome Back!</h1>
+			<p>To keep connected with us please login with your personal info</p>
+			<button class="ghost" id="signIn">Sign In</button>
+		</div>
+		<div class="overlay-panel overlay-right">
+			<h1>Hello, Friend!</h1>
+			<p>Enter your details and start journey with us</p>
+			<button class="ghost" id="signUp">Sign Up</button>
+		</div>
+	</div> 
+        <!-- <div class="form-container sign-in-container">
+	<form action="/" method="post">
+		<h1>Sign In</h1>
+	<span>To use your account</span>
+	<br>
+	<input type="text" name="uname" id="uname" placeholder="Username">
+	<input type="password" name="passw" id="passw" placeholder="Password">
+
+	<button type="submit">Sign In</button>
+	</form>
+</div> -->
+</div>
+</div>
+<script>
+		// function validatePassword(password) {
+		// var passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+		// if (password.match(passwordRegex)) {
+		// 	return true;
+		// } else {
+		// 	return false;
+		// }
+		// }
+		// var password = document.getElementById("passw");
+		// if (validatePassword(password)) {
+		// alert("Account created Successfully!");
+		// } else {
+		// alert("Password is invalid. Please use a password of at least 8 characters containing 1 uppercase letter, 1 number, and 1 special character.");
+		// }
+		function validatePassword() {
+		var password = document.getElementById("password").value;
+		var uppercaseRegex = /[A-Z]/;
+		var numberRegex = /[0-9]/;
+		var specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+		
+		if (password.length < 8 || !uppercaseRegex.test(password) || !numberRegex.test(password) || !specialCharRegex.test(password)) {
+			 alert("Error: Password must be at least 8 characters long and contain at least one uppercase letter, one number, and one special character.");
+		} else {
+			alert("Account Created Successfully!");
+		}
+		}
+	</script>
+
+<script type="text/javascript">
+	const signUpButton = document.getElementById('signUp');
+	const signInButton = document.getElementById('signIn');
+	const container = document.getElementById('container');
+
+	signUpButton.addEventListener('click', () => {
+		container.classList.add("right-panel-active");
+	});
+	signInButton.addEventListener('click', () => {
+		container.classList.remove("right-panel-active");
+	});
+</script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+<!-- <div class="container">
+        <header>Sign In to Account</header>
+        <div class="row" style="margin-top: 40px">
+            <div class="">
+                <form method="POST">
+                    <div class="form-group input-fields">
+                      <label for="email" class="title">Username : </label>
+                      <input type="text" name="uname" class="form-control" id="uname">
+                    </div>
+                    <div class="form-group input-fields">
+                      <label for="email" class="title">Password : </label>
+                      <input type="password" name="passw" class="form-control" id="passw">
+                    </div>
+                    <button type="submit" class="btn form-control btn-default btnText" ><a href="{{url_for('show')}}" style="color: rgb(70, 70, 145)">Login</a></button>
+                    <button type="submit" class="btn form-control btn-default btnText" ><a href="{{url_for('register')}}" style="font-size: 14px; font-weight: 400; color:rgb(61, 61, 135);"> New user? Register</a></button>
+                </form>
+            </div>
+        </div>
+    </div> -->
